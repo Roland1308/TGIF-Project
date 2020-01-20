@@ -1,81 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="icon" href="./Images/MyHome.jpg" type="image/jpg" sizes="16x16" />
-        <title>Transparent Government in Fact</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="./CSS/style.css"/>
-    </head>
 
-    <body class="container">
+<head>
+    <link rel="icon" href="./Images/MyHome.jpg" type="image/jpg" sizes="16x16" />
+    <title>Transparent Government in Fact</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./CSS/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body class="container">
+    <div id="myVue">
         <header>
-            <nav>
-                <div>
-                    <div class="d-flex mb-2">
-                        <a class="navbar-brand p-2 mr-auto" href="index.html"><img
-                            src="./Images/MyTgif.jpg"
-                            alt="Transparent Government in Fact"
-                            width="500"/></a>
-                        <p class="p-2 align-self-center">
-                            <a href="mailto:info@tgif.net"><img
-                                src="./Images/emailus.png"
-                                alt="Transparent Government in Fact"
-                                width="150"/></a>
-                        </p>
-                    </div>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Congress 113</a >
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="./senate-data.html">Senate</a>
-                                <a class="dropdown-item" href="./house-data.html">House</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Attendance</a >
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="./senate-attendance-stats.html">Senate</a>
-                                <a class="dropdown-item" href="./house-attendance-stats.html">House</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty</a >
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="./senate-party-loyalty-stats.html">Senate</a>
-                                <a class="dropdown-item" href="./house-party-loyalty-stats.html">House</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <navBar></navBar>
         </header>
         <!--Table container-->
         <div class="row">
             <div class="col-8">
                 <!--Accordion wrapper-->
-                <div
-                    class="accordion md-accordion accordion-4"
-                    id="accordionEx2"
-                    role="tablist"
+                <div class="accordion md-accordion accordion-4" id="accordionEx2" role="tablist"
                     aria-multiselectable="true">
                     <!-- Accordion card -->
                     <div class="card">
                         <!-- Card header -->
                         <div class="card-header z-depth-1 teal lighten-4" role="tab" id="heading10">
-                            <a
-                                class="collapsed"
-                                data-toggle="collapse"
-                                data-parent="#accordionEx2"
-                                href="#collapse10"
-                                aria-expanded="true"
-                                aria-controls="collapse10">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx2" href="#collapse10"
+                                aria-expanded="true" aria-controls="collapse10">
                                 <h4 class="mb-0 black-text text-center font-weight-bold text-uppercase">
                                     About Us
                                 </h4>
@@ -83,11 +35,7 @@
                         </div>
 
                         <!-- Card body -->
-                        <div
-                            id="collapse10"
-                            class="collapse"
-                            role="tabpanel"
-                            aria-labelledby="heading10"
+                        <div id="collapse10" class="collapse" role="tabpanel" aria-labelledby="heading10"
                             data-parent="#accordionEx2">
                             <div class="card-body rgba-teal-strong white-text">
                                 <p>
@@ -124,13 +72,8 @@
                     <div class="card">
                         <!-- Card header -->
                         <div class="card-header z-depth-1 teal lighten-3" role="tab" id="heading11">
-                            <a
-                                class="collapsed"
-                                data-toggle="collapse"
-                                data-parent="#accordionEx2"
-                                href="#collapse11"
-                                aria-expanded="true"
-                                aria-controls="collapse11">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx2" href="#collapse11"
+                                aria-expanded="true" aria-controls="collapse11">
                                 <h4 class="mb-0 black-text text-center font-weight-bold text-uppercase">
                                     Background History of Government Transparency
                                 </h4>
@@ -138,11 +81,7 @@
                         </div>
 
                         <!-- Card body -->
-                        <div
-                            id="collapse11"
-                            class="collapse"
-                            role="tabpanel"
-                            aria-labelledby="heading11"
+                        <div id="collapse11" class="collapse" role="tabpanel" aria-labelledby="heading11"
                             data-parent="#accordionEx2">
                             <div class="card-body rgba-teal-strong white-text">
                                 <p>
@@ -189,18 +128,19 @@
                 <!-- Accordion card -->
             </div>
             <div class="col-4">
-                <img src="./Images/MyHome.jpg" alt="" width="100%"/>
+                <img src="./Images/MyHome.jpg" alt="" width="100%" />
             </div>
         </div>
-        <footer class="page-footer font-small nav-tabs">
-            <div class="footer-copyright text-center py-3">
-                © 2019 TGIF | All Rights Reserved
-            </div>
-        </footer>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    </body>
+    </div>
+    <footer class="page-footer font-small nav-tabs">
+        <div class="footer-copyright text-center py-3">
+            © 2019 TGIF | All Rights Reserved
+        </div>
+    </footer>
+    <script src="./JS/vueJS.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+
 </html>
