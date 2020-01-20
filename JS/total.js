@@ -75,10 +75,14 @@ async function getData() {
             style="width: ${progBar}%; height: 40px; padding-top: 5px;
              background: repeating-linear-gradient(
               45deg,
-              rgb(${255 - 1.59*progBar}, ${1.09*progBar}, ${1.88*progBar}),
-              rgb(${255 - 1.59*progBar}, ${1.09*progBar}, ${1.88*progBar}) 10px,
-              rgb(${255 - 1.85*progBar}, ${0.82*progBar}, ${1.52*progBar}) 10px,
-              rgb(${255 - 1.85*progBar}, ${0.82*progBar}, ${1.52*progBar}) 20px
+              rgb(${255 - 1.59 * progBar}, ${1.09 * progBar}, ${1.88 *
+      progBar}),
+              rgb(${255 - 1.59 * progBar}, ${1.09 * progBar}, ${1.88 *
+      progBar}) 10px,
+              rgb(${255 - 1.85 * progBar}, ${0.82 * progBar}, ${1.52 *
+      progBar}) 10px,
+              rgb(${255 - 1.85 * progBar}, ${0.82 * progBar}, ${1.52 *
+      progBar}) 20px
             ); color: white; text-align: center;"
           >
             Loading...
