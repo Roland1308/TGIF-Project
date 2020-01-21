@@ -2,16 +2,30 @@
 
 let members = [],
   filteredMembers = [];
-let flagSort = [
-  {
+let flagSort = [{
     flag: -1,
     id: "surname",
     up: "fa-sort-alpha-up",
     down: "fa-sort-alpha-down"
   },
-  { flag: 0, id: "name", up: "fa-sort-alpha-up", down: "fa-sort-alpha-down" },
-  { flag: 0, id: "party", up: "fa-sort-alpha-up", down: "fa-sort-alpha-down" },
-  { flag: 0, id: "state", up: "fa-sort-alpha-up", down: "fa-sort-alpha-down" },
+  {
+    flag: 0,
+    id: "name",
+    up: "fa-sort-alpha-up",
+    down: "fa-sort-alpha-down"
+  },
+  {
+    flag: 0,
+    id: "party",
+    up: "fa-sort-alpha-up",
+    down: "fa-sort-alpha-down"
+  },
+  {
+    flag: 0,
+    id: "state",
+    up: "fa-sort-alpha-up",
+    down: "fa-sort-alpha-down"
+  },
   {
     flag: 0,
     id: "seniority",
@@ -43,9 +57,9 @@ let SumVotesI = 0;
 
 //Fetch the data depending on the page we are in
 async function getData() {
-  const url = window.location.href.includes("senate")
-    ? "https://api.propublica.org/congress/v1/113/senate/members.json"
-    : "https://api.propublica.org/congress/v1/113/house/members.json";
+  const url = window.location.href.includes("senate") ?
+    "https://api.propublica.org/congress/v1/113/senate/members.json" :
+    "https://api.propublica.org/congress/v1/113/house/members.json";
   const decoder = new TextDecoder("utf-8");
   let json = [];
   let response = await fetch(url, {
@@ -63,7 +77,10 @@ async function getData() {
   let at = 0; // to index into the array
   const reader = response.body.getReader();
   for (;;) {
-    const { done, value } = await reader.read();
+    const {
+      done,
+      value
+    } = await reader.read();
     if (done) {
       break;
     }
@@ -106,18 +123,11 @@ async function getData() {
 }
 
 //Create the dropdown menu for filtering the states
-let createDropdown = () => {
-  let states = members.map(x => x.state).sort();
-  // Remove duplicates
-  let noDupStates = [];
-  for (let i = 0, len = states.length - 1; i < len; i++) {
-    if (states[i] != states[i + 1]) {
-      noDupStates.push(states[i]);
-    }
-  }
+createDropdown = () => {
+  let states = [...new Set(members.map(member => member.state))].sort();
   //Create DOM elements
   let sel = document.getElementById("selState");
-  noDupStates.forEach(stato => {
+  states.forEach(stato => {
     let sRow = document.createElement("option");
     sRow.textContent = stato;
     sRow.value = stato;
@@ -163,22 +173,22 @@ let createTable = lista => {
 let filter = () => {
   filteredMembers = members.filter(
     x =>
-      x.state == document.getElementById("selState").value ||
-      document.getElementById("selState").value == "all"
+    x.state == document.getElementById("selState").value ||
+    document.getElementById("selState").value == "all"
   );
   let checks = document.querySelectorAll("input[type=checkbox]");
   if (checks[0].checked && checks[1].checked && checks[2].checked) {
     alert("Please SHOW at least one party");
   }
-  filteredMembers = checks[0].checked
-    ? filteredMembers.filter(x => x.party != "D")
-    : filteredMembers;
-  filteredMembers = checks[1].checked
-    ? filteredMembers.filter(x => x.party != "R")
-    : filteredMembers;
-  filteredMembers = checks[2].checked
-    ? filteredMembers.filter(x => x.party != "I")
-    : filteredMembers;
+  filteredMembers = checks[0].checked ?
+    filteredMembers.filter(x => x.party != "D") :
+    filteredMembers;
+  filteredMembers = checks[1].checked ?
+    filteredMembers.filter(x => x.party != "R") :
+    filteredMembers;
+  filteredMembers = checks[2].checked ?
+    filteredMembers.filter(x => x.party != "I") :
+    filteredMembers;
   //Re-sort the list as per last sorting criteria
   let flags = flagSort.map(x => Math.abs(x.flag));
   let sortBy = flags.indexOf(1);
@@ -218,6 +228,7 @@ let sort_Table = newSort => {
   newSortGlobal = newSort;
   sortTheData(newSortGlobal);
 };
+
 //Sorting
 let sortTheData = x => {
   switch (flagSort[x].id) {
@@ -241,7 +252,6 @@ let sortTheData = x => {
   }
   createTable(filteredMembers);
 };
-
 let A_B_surName = (a, b) => {
   if (a.last_name < b.last_name) {
     return flagSort[newSortGlobal].flag;
@@ -302,22 +312,22 @@ let fillStatistics = () => {
       statistics.NrOfInde++;
       SumVotesI += person.votes_with_party_pct;
     }
-    person.comparingKey = window.location.href.includes("attendance")
-      ? person.missed_votes_pct
-      : person.votes_with_party_pct;
+    person.comparingKey = window.location.href.includes("attendance") ?
+      person.missed_votes_pct :
+      person.votes_with_party_pct;
   });
   statistics.AvgOfDemo =
-    statistics.NrOfDemo == 0
-      ? 0
-      : Math.round((SumVotesD / statistics.NrOfDemo) * 100) / 100;
+    statistics.NrOfDemo == 0 ?
+    0 :
+    Math.round((SumVotesD / statistics.NrOfDemo) * 100) / 100;
   statistics.AvgOfRepu =
-    statistics.NrOfRepu == 0
-      ? 0
-      : Math.round((SumVotesR / statistics.NrOfRepu) * 100) / 100;
+    statistics.NrOfRepu == 0 ?
+    0 :
+    Math.round((SumVotesR / statistics.NrOfRepu) * 100) / 100;
   statistics.AvgOfInde =
-    statistics.NrOfInde == 0
-      ? 0
-      : Math.round((SumVotesI / statistics.NrOfInde) * 100) / 100;
+    statistics.NrOfInde == 0 ?
+    0 :
+    Math.round((SumVotesI / statistics.NrOfInde) * 100) / 100;
   statistics.sortedMembers = members.slice().sort(compareKey);
 };
 
@@ -458,24 +468,25 @@ let createLeastEng = () => {
 //Event Listeners
 let addListener = () => {
   document.getElementById("filters").addEventListener("change", filter);
-  document.getElementById("surname").addEventListener("click", function() {
+  document.getElementById("surname").addEventListener("click", function () {
     sort_Table(0);
   });
-  document.getElementById("name").addEventListener("click", function() {
+  document.getElementById("name").addEventListener("click", function () {
     sort_Table(1);
   });
-  document.getElementById("party").addEventListener("click", function() {
+  document.getElementById("party").addEventListener("click", function () {
     sort_Table(2);
   });
-  document.getElementById("state").addEventListener("click", function() {
+  document.getElementById("state").addEventListener("click", function () {
     sort_Table(3);
   });
-  document.getElementById("seniority").addEventListener("click", function() {
+  document.getElementById("seniority").addEventListener("click", function () {
     sort_Table(4);
   });
-  document.getElementById("percentage").addEventListener("click", function() {
+  document.getElementById("percentage").addEventListener("click", function () {
     sort_Table(5);
   });
 };
+
 //LAUNCH!
 getData();

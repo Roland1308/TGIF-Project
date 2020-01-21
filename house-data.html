@@ -75,57 +75,57 @@
         Loading
       </div>
     </div>
-   <div id="loadedPage" style="display: none;"> 
-    <!--filters-->
-    <div class="row align-items-end container" id="filters">
-      <div class="col-6">
-        <h2>List filtering:</h2>
-        <h3>Choose Parties to be hidden.</h3>
-        <label for="demoButt">Toggle Democrats</label>
-        <input type=checkbox id="demoButt"></input>
-        <label for="repuButt">Toggle Republicans</label>
-        <input type=checkbox id="repuButt"></input>
-        <label for="indeButt">Toggle Independents</label>
-        <input type=checkbox id="indeButt"></input>
+    <div id="loadedPage" style="display: none;">
+      <!--filters-->
+      <div class="row align-items-end container" id="filters">
+        <div class="col-6">
+          <h2>List filtering:</h2>
+          <h3>Choose Parties to be hidden.</h3>
+          <label for="demoButt">Toggle Democrats</label>
+          <input type=checkbox id="demoButt"></input>
+          <label for="repuButt">Toggle Republicans</label>
+          <input type=checkbox id="repuButt"></input>
+          <label for="indeButt">Toggle Independents</label>
+          <input type=checkbox id="indeButt"></input>
+        </div>
+        <div class="col-6">
+          <h3>Choose the State.</h3>
+          <select id="selState">
+            <option value="all" id="all">All States</option>
+          </select>
+        </div>
       </div>
-      <div class="col-6">
-        <h3>Choose the State.</h3>
-        <select id="selState">
-          <option value="all" id="all">All States</option>
-        </select>
-      </div>
+      <!--Table-->
+      <table class="table table-bordered table-hover table-sm">
+        <thead class="stick">
+          <tr>
+            <th class="stick">
+              Congressman: <i id="name" class="fas fa-sort"> First Name</i>,
+              <i id="surname" class="fas fa-sort-alpha-down"> Last Name</i>
+            </th>
+            <th class="stick"><i id="party" class="fas fa-sort"> Party</i></th>
+            <th class="stick"><i id="state" class="fas fa-sort"> State</i></th>
+            <th class="stick"><i id="seniority" class="fas fa-sort"> Seniority</i></th>
+            <th class="stick">
+              <i id="percentage" class="fas fa-sort"> Percentage of votes</i>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="members_table"></tbody>
+        <tfoot id="members_foot">
+          <tr>
+            <td colspan="5">END OF LIST</td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-
-    <!--Table-->
-    <table class="table table-bordered table-hover table-sm">
-      <thead class="stick">
-        <tr>
-          <th class="stick">
-            Congressman: <i id="name" class="fas fa-sort"> First Name</i>,
-            <i id="surname" class="fas fa-sort-alpha-down"> Last Name</i>
-          </th>
-          <th class="stick"><i id="party" class="fas fa-sort"> Party</i></th>
-          <th class="stick"><i id="state" class="fas fa-sort"> State</i></th>
-          <th class="stick"><i id="seniority" class="fas fa-sort"> Seniority</i></th>
-          <th class="stick">
-            <i id="percentage" class="fas fa-sort"> Percentage of votes</i>
-          </th>
-        </tr>
-      </thead>
-      <tbody id="members_table"></tbody>
-      <tfoot id="members_foot">
-        <tr>
-          <td colspan="5">END OF LIST</td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
   </div>
   <footer class="page-footer font-small nav-tabs">
     <div class="footer-copyright text-center py-3">
       © 2019 TGIF | All Rights Reserved
     </div>
   </footer>
+  
   <script src="./JS/total.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
