@@ -70,7 +70,7 @@
               </tr>
             </thead>
             <tbody id="Table_Least_Eng">
-                <tr v-for="(person, idx) in leastMembersSenate" :key="idx">
+                <tr v-for="(person, idx) in mostMembersSenate" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
@@ -90,7 +90,7 @@
               </tr>
             </thead>
             <tbody id="Table_Most_Eng">
-                <tr v-for="(person, idx) in mostMembersSenate" :key="idx">
+                <tr v-for="(person, idx) in leastMembersSenate" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
