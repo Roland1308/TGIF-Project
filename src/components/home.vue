@@ -110,7 +110,7 @@
                 <!-- Accordion card -->
             </div>
             <div class="col-4">
-                <img src="..\..\public\Images\MyHome.jpg" alt="" width="100%" />
+                <img src="..\..\public\Images\myhome.jpg" alt="" width="100%" />
             </div>
         </div>
 </template>
