@@ -2,62 +2,51 @@
 .principale {
     padding-top: 20px;
 }
-
 div>img {
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
-
 .nav-link {
     background-color: rgb(221, 221, 221);
 }
-
 .centered,
 th:nth-child(n+2),
 td:nth-child(n+2) {
     text-align: center;
 }
-
 #Foot_at_Glance,
 .normal_foot {
     background-color: rgb(134, 185, 255);
     border-top: 2px black solid;
 }
-
 .normal_foot,
 .error_foot {
     text-align: center;
     font-weight: bold;
 }
-
 .error_foot {
     background-color: rgb(230, 116, 116);
 }
-
 h2 {
     font-size: 1.4rem;
 }
-
 h3 {
     font-size: 1rem;
 }
-
 button,
 select {
     margin-bottom: 10px;
 }
-
-.fas,label,input:hover {
-  cursor: pointer;
+.fas,
+label,
+input:hover {
+    cursor: pointer;
 }
-
 label {
     margin-left: 10px;
 }
-
 .fa-sort {
-    color:rgb(155,155,155);
+    color: rgb(155, 155, 155);
 }
-
 .stick {
     background-color: rgb(221, 221, 221);
     border-bottom: 2px solid #dee2e6;

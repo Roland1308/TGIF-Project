@@ -3,7 +3,7 @@ Vue.component(`navbar`, {
     <nav>
       <div>
         <div class="d-flex mb-2">
-          <a class="navbar-brand p-2 mr-auto" href="index-vue.html"><img src="./Images/MyTgif.jpg"
+          <a class="navbar-brand p-2 mr-auto" href="index.html"><img src="./Images/MyTgif.jpg"
               alt="Transparent Government in Fact" width="500" /></a>
           <p class="p-2 align-self-center">
             <a href="mailto:info@tgif.net"><img src="./Images/emailus.png" alt="Transparent Government in Fact"
@@ -41,27 +41,68 @@ Vue.component(`navbar`, {
 
   data() {
     return {
-      homeClass: window.location.href.includes("index") ? "nav-link active" : "nav-link",
-      homeLink: window.location.href.includes("index") ? "javascript:void(0)" : "./index-vue.html",
-      dataSenateClass: window.location.href.includes("senate-vue-data") ? "dropdown-item active" : "dropdown-item",
-      dataSenateLink: window.location.href.includes("senate-vue-data") ? "javascript:void(0)" : "./senate-vue-data.html",
-      dataHouseClass: window.location.href.includes("house-vue-data") ? "dropdown-item active" : "dropdown-item",
-      dataHouseLink: window.location.href.includes("house-vue-data") ? "javascript:void(0)" : "./house-vue-data.html",
-      dataClass: window.location.href.includes("data") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle",
-      attendanceSenateClass: window.location.href.includes("senate-vue-attendance-stats") ? "dropdown-item active" : "dropdown-item",
-      attendanceSenateLink: window.location.href.includes("senate-vue-attendance-stats") ? "javascript:void(0)" : "./senate-vue-attendance-stats.html",
-      attendanceHouseClass: window.location.href.includes("house-vue-attendance-stats") ? "dropdown-item active" : "dropdown-item",
-      attendanceHouseLink: window.location.href.includes("house-vue-attendance-stats") ? "javascript:void(0)" : "./house-vue-attendance-stats.html",
-      attendanceClass: window.location.href.includes("attendance") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle",
-      partySenateClass: window.location.href.includes("senate-vue-party") ? "dropdown-item active" : "dropdown-item",
-      partySenateLink: window.location.href.includes("senate-vue-party") ? "javascript:void(0)" : "./senate-vue-party-loyalty-stats.html",
-      partyHouseClass: window.location.href.includes("house-vue-party") ? "dropdown-item active" : "dropdown-item",
-      partyHouseLink: window.location.href.includes("house-vue-party") ? "javascript:void(0)" : "./house-vue-party-loyalty-stats.html",
-      partyClass: window.location.href.includes("party") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle"
-
-    }
+      homeClass: window.location.href.includes("index")
+        ? "nav-link active"
+        : "nav-link",
+      homeLink: window.location.href.includes("index")
+        ? "javascript:void(0)"
+        : "./index.html",
+      dataSenateClass: window.location.href.includes("senate-vue-data")
+        ? "dropdown-item active"
+        : "dropdown-item",
+      dataSenateLink: window.location.href.includes("senate-vue-data")
+        ? "javascript:void(0)"
+        : "./senate-vue-data.html",
+      dataHouseClass: window.location.href.includes("house-vue-data")
+        ? "dropdown-item active"
+        : "dropdown-item",
+      dataHouseLink: window.location.href.includes("house-vue-data")
+        ? "javascript:void(0)"
+        : "./house-vue-data.html",
+      dataClass: window.location.href.includes("data")
+        ? "nav-link dropdown-toggle active"
+        : "nav-link dropdown-toggle",
+      attendanceSenateClass: window.location.href.includes(
+        "senate-vue-attendance-stats"
+      )
+        ? "dropdown-item active"
+        : "dropdown-item",
+      attendanceSenateLink: window.location.href.includes(
+        "senate-vue-attendance-stats"
+      )
+        ? "javascript:void(0)"
+        : "./senate-vue-attendance-stats.html",
+      attendanceHouseClass: window.location.href.includes(
+        "house-vue-attendance-stats"
+      )
+        ? "dropdown-item active"
+        : "dropdown-item",
+      attendanceHouseLink: window.location.href.includes(
+        "house-vue-attendance-stats"
+      )
+        ? "javascript:void(0)"
+        : "./house-vue-attendance-stats.html",
+      attendanceClass: window.location.href.includes("attendance")
+        ? "nav-link dropdown-toggle active"
+        : "nav-link dropdown-toggle",
+      partySenateClass: window.location.href.includes("senate-vue-party")
+        ? "dropdown-item active"
+        : "dropdown-item",
+      partySenateLink: window.location.href.includes("senate-vue-party")
+        ? "javascript:void(0)"
+        : "./senate-vue-party-loyalty-stats.html",
+      partyHouseClass: window.location.href.includes("house-vue-party")
+        ? "dropdown-item active"
+        : "dropdown-item",
+      partyHouseLink: window.location.href.includes("house-vue-party")
+        ? "javascript:void(0)"
+        : "./house-vue-party-loyalty-stats.html",
+      partyClass: window.location.href.includes("party")
+        ? "nav-link dropdown-toggle active"
+        : "nav-link dropdown-toggle"
+    };
   }
-})
+});
 
 let app = new Vue({
   el: "#myVue",
@@ -97,7 +138,8 @@ let app = new Vue({
     arrowPercentage: "fas fa-sort",
     oldColumn: 0,
 
-    flagSort: [{
+    flagSort: [
+      {
         flag: -1,
         id: "surname",
         up: "fas fa-sort-alpha-up",
@@ -151,9 +193,9 @@ let app = new Vue({
   methods: {
     //Fetch the data depending on the page we are in
     async getData() {
-      const url = window.location.href.includes("senate") ?
-        "https://api.propublica.org/congress/v1/113/senate/members.json" :
-        "https://api.propublica.org/congress/v1/113/house/members.json";
+      const url = window.location.href.includes("senate")
+        ? "https://api.propublica.org/congress/v1/113/senate/members.json"
+        : "https://api.propublica.org/congress/v1/113/house/members.json";
       const decoder = new TextDecoder("utf-8");
       let json = [];
       let response = await fetch(url, {
@@ -171,10 +213,7 @@ let app = new Vue({
       let at = 0; // to index into the array
       const reader = response.body.getReader();
       for (;;) {
-        const {
-          done,
-          value
-        } = await reader.read();
+        const { done, value } = await reader.read();
         if (done) {
           break;
         }
@@ -234,22 +273,22 @@ let app = new Vue({
             this.SumVotesI += person.votes_with_party_pct;
             break;
         }
-        person.comparingKey = window.location.href.includes("attendance") ?
-          person.missed_votes_pct :
-          person.votes_with_party_pct;
+        person.comparingKey = window.location.href.includes("attendance")
+          ? person.missed_votes_pct
+          : person.votes_with_party_pct;
       });
       this.statistics.AvgOfDemo =
-        this.statistics.NrOfDemo == 0 ?
-        0 :
-        Math.round((this.SumVotesD / this.statistics.NrOfDemo) * 100) / 100;
+        this.statistics.NrOfDemo == 0
+          ? 0
+          : Math.round((this.SumVotesD / this.statistics.NrOfDemo) * 100) / 100;
       this.statistics.AvgOfRepu =
-        this.statistics.NrOfRepu == 0 ?
-        0 :
-        Math.round((this.SumVotesR / this.statistics.NrOfRepu) * 100) / 100;
+        this.statistics.NrOfRepu == 0
+          ? 0
+          : Math.round((this.SumVotesR / this.statistics.NrOfRepu) * 100) / 100;
       this.statistics.AvgOfInde =
-        this.statistics.NrOfInde == 0 ?
-        0 :
-        Math.round((this.SumVotesI / this.statistics.NrOfInde) * 100) / 100;
+        this.statistics.NrOfInde == 0
+          ? 0
+          : Math.round((this.SumVotesI / this.statistics.NrOfInde) * 100) / 100;
       this.statistics.sortedMembers = this.members
         .slice()
         .sort((a, b) => a.comparingKey - b.comparingKey);
@@ -261,11 +300,11 @@ let app = new Vue({
         Math.round(
           ((this.SumVotesD + this.SumVotesR + this.SumVotesI) /
             this.TotalReps) *
-          100
+            100
         ) / 100;
     },
 
-    //Create DOM for table AT A GLANCE
+    //Create DOM for Least and Most tables
     createLeastMost() {
       len = this.statistics.sortedMembers.length;
       cicle = Math.round(len / 10);
@@ -337,13 +376,14 @@ let app = new Vue({
       } else {
         this.members.reverse();
         this.flagSort[column].flag *= -1;
-        this.flagSort[column].arrow = this.flagSort[column].flag == -1 ?
-          this.flagSort[column].down :
-          this.flagSort[column].up;
+        this.flagSort[column].arrow =
+          this.flagSort[column].flag == -1
+            ? this.flagSort[column].down
+            : this.flagSort[column].up;
       }
       this.filteredMembers = this.members;
     },
-    sortedArray: function (y) {
+    sortedArray: function(y) {
       function compare(a, b) {
         switch (y) {
           case 0:
@@ -377,15 +417,15 @@ let app = new Vue({
         );
         filtered = filtered.filter(
           x =>
-          x.party != this.checkBoxes[0] &&
-          x.party != this.checkBoxes[1] &&
-          x.party != this.checkBoxes[2]
+            x.party != this.checkBoxes[0] &&
+            x.party != this.checkBoxes[1] &&
+            x.party != this.checkBoxes[2]
         );
-        filtered.length == 0 ?
-          (this.piede =
-            '<tr class="error_foot"><td colspan="5">NO ITEMS TO DISPLAY</td></tr>') :
-          (this.piede =
-            '<tr class="normal_foot"><td colspan="5">END OF LIST</td></tr>');
+        filtered.length == 0
+          ? (this.piede =
+              '<tr class="error_foot"><td colspan="5">NO ITEMS TO DISPLAY</td></tr>')
+          : (this.piede =
+              '<tr class="normal_foot"><td colspan="5">END OF LIST</td></tr>');
         return filtered;
       },
       set() {
