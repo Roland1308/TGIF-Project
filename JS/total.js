@@ -1,57 +1,60 @@
 //GLOBAL SCOPE VARIABLE DEFINITION
 
 let members = [],
-  filteredMembers = [];
-let flagSort = [{
-    flag: -1,
-    id: "surname",
-    up: "fa-sort-alpha-up",
-    down: "fa-sort-alpha-down"
+  filteredMembers = [],
+  flagSort = [{
+      flag: -1,
+      id: "surname",
+      up: "fa-sort-alpha-up",
+      down: "fa-sort-alpha-down"
+    },
+    {
+      flag: 0,
+      id: "name",
+      up: "fa-sort-alpha-up",
+      down: "fa-sort-alpha-down"
+    },
+    {
+      flag: 0,
+      id: "party",
+      up: "fa-sort-alpha-up",
+      down: "fa-sort-alpha-down"
+    },
+    {
+      flag: 0,
+      id: "state",
+      up: "fa-sort-alpha-up",
+      down: "fa-sort-alpha-down"
+    },
+    {
+      flag: 0,
+      id: "seniority",
+      up: "fa-sort-numeric-up",
+      down: "fa-sort-numeric-down"
+    },
+    {
+      flag: 0,
+      id: "percentage",
+      up: "fa-sort-numeric-up",
+      down: "fa-sort-numeric-down"
+    }
+  ],
+  newSortGlobal = 0,
+  statistics = {
+    NrOfDemo: 0,
+    NrOfRepu: 0,
+    NrOfInde: 0,
+    AvgOfDemo: 0,
+    AvgOfRepu: 0,
+    AvgOfInde: 0,
+    sortedMembers: []
   },
-  {
-    flag: 0,
-    id: "name",
-    up: "fa-sort-alpha-up",
-    down: "fa-sort-alpha-down"
-  },
-  {
-    flag: 0,
-    id: "party",
-    up: "fa-sort-alpha-up",
-    down: "fa-sort-alpha-down"
-  },
-  {
-    flag: 0,
-    id: "state",
-    up: "fa-sort-alpha-up",
-    down: "fa-sort-alpha-down"
-  },
-  {
-    flag: 0,
-    id: "seniority",
-    up: "fa-sort-numeric-up",
-    down: "fa-sort-numeric-down"
-  },
-  {
-    flag: 0,
-    id: "percentage",
-    up: "fa-sort-numeric-up",
-    down: "fa-sort-numeric-down"
-  }
-];
-let newSortGlobal = 0;
-let statistics = {
-  NrOfDemo: 0,
-  NrOfRepu: 0,
-  NrOfInde: 0,
-  AvgOfDemo: 0,
-  AvgOfRepu: 0,
-  AvgOfInde: 0,
-  sortedMembers: []
-};
-let SumVotesD = 0;
-let SumVotesR = 0;
-let SumVotesI = 0;
+  SumVotesD = 0,
+  SumVotesR = 0,
+  SumVotesI = 0;
+
+//LAUNCH!
+getData();
 
 //FUNCTIONS DECLARATION
 
@@ -127,18 +130,20 @@ createDropdown = () => {
   let states = [...new Set(members.map(member => member.state))].sort();
   //Create DOM elements
   let sel = document.getElementById("selState");
+  let string = "<option id = 'All States' value = 'all'>All States</option>";
   states.forEach(stato => {
-    let sRow = document.createElement("option");
-    sRow.textContent = stato;
-    sRow.value = stato;
-    sRow.id = stato;
-    sel.appendChild(sRow);
+    string += `<option id = ${stato} value = ${stato}>${stato}</option>`;
   });
+  sel.innerHTML = string;
 };
 
 //Create the data table
 let createTable = lista => {
   let piede = document.getElementById("members_foot");
+  let table = document.getElementById("members_table");
+  let string = "";
+  table.innerHTML = "";
+
   if (lista.length == 0) {
     piede.innerHTML = `
     <tr class="error_foot">
@@ -150,23 +155,21 @@ let createTable = lista => {
     <td colspan="5">END OF LIST</td>
   </tr>`;
   }
-  let table = document.getElementById("members_table");
-  table.innerHTML = "";
+
   lista.forEach(person => {
     //Adding the Table Rows
-    let tRow = document.createElement("tr");
-    table.append(tRow);
-    let middle = person.middle_name == null ? "" : person.middle_name;
-    let string = `
-    <td>
-    <a href="${person.url}" target="_blank">${person.first_name} ${middle} ${person.last_name}</a>
-    </td>
-    <td>${person.party}</td>
-    <td>${person.state}</td>
-    <td>${person.seniority}</td>
-    <td>${person.votes_with_party_pct}%</td>`;
-    tRow.innerHTML = string;
+    string += `
+    <tr>
+      <td>
+      <a href="${person.url}" target="_blank">${person.first_name} ${(person.middle_name || "")} ${person.last_name}</a>
+      </td>
+      <td>${person.party}</td>
+      <td>${person.state}</td>
+      <td>${person.seniority}</td>
+      <td>${person.votes_with_party_pct}%</td>
+    </tr>`;
   });
+  table.innerHTML = string;
 };
 
 //Filtering the list: dropdown and checkboxes
@@ -176,24 +179,22 @@ let filter = () => {
     x.state == document.getElementById("selState").value ||
     document.getElementById("selState").value == "all"
   );
-  let checks = document.querySelectorAll("input[type=checkbox]");
-  if (checks[0].checked && checks[1].checked && checks[2].checked) {
+  let checks = Array.from(document.querySelectorAll("input[type='checkbox']:checked"));
+  if (checks.length == 3) {
     alert("Please SHOW at least one party");
   }
-  filteredMembers = checks[0].checked ?
-    filteredMembers.filter(x => x.party != "D") :
-    filteredMembers;
-  filteredMembers = checks[1].checked ?
-    filteredMembers.filter(x => x.party != "R") :
-    filteredMembers;
-  filteredMembers = checks[2].checked ?
-    filteredMembers.filter(x => x.party != "I") :
-    filteredMembers;
+  checks.forEach(box => {
+    filteredMembers = (filteredMembers.filter(x => (
+      x.party != "D" && box.id.includes("demo")) || (
+      x.party != "R" && box.id.includes("repu")) || (
+      x.party != "I" && box.id.includes("inde"))));
+  });
   //Re-sort the list as per last sorting criteria
   let flags = flagSort.map(x => Math.abs(x.flag));
   let sortBy = flags.indexOf(1);
   newSortGlobal = sortBy;
-  sortTheData(sortBy);
+  sortTheData();
+  createTable(filteredMembers);
 };
 
 // Sorting the table: changing the arrows in the DOM and calling the sorting function
@@ -226,77 +227,41 @@ let sort_Table = newSort => {
     flagSort[newSort].flag = -1;
   }
   newSortGlobal = newSort;
-  sortTheData(newSortGlobal);
+  sortTheData();
+  createTable(filteredMembers);
 };
 
 //Sorting
-let sortTheData = x => {
-  switch (flagSort[x].id) {
+function compare(a, b) {
+  console.log(newSortGlobal, flagSort[newSortGlobal].id, flagSort[newSortGlobal].flag)
+  switch (flagSort[newSortGlobal].id) {
     case "surname":
-      filteredMembers.sort(A_B_surName);
-      break;
+      if (a.last_name < b.last_name) return flagSort[newSortGlobal].flag;
+      else return -flagSort[newSortGlobal].flag;
     case "name":
-      filteredMembers.sort(A_B_Name);
-      break;
+      if (a.first_name < b.first_name) return flagSort[newSortGlobal].flag;
+      else return -flagSort[newSortGlobal].flag;
     case "party":
-      filteredMembers.sort(A_B_Party);
-      break;
+      if (a.party < b.party) return flagSort[newSortGlobal].flag;
+      else return -flagSort[newSortGlobal].flag;
     case "state":
-      filteredMembers.sort(A_B_State);
-      break;
+      if (a.state < b.state) return flagSort[newSortGlobal].flag;
+      else return -flagSort[newSortGlobal].flag;
     case "seniority":
-      filteredMembers.sort(A_B_Seniority);
-      break;
+      return (a.seniority - b.seniority) * -flagSort[newSortGlobal].flag;;
     case "percentage":
-      filteredMembers.sort(A_B_Percentage);
+      return (a.votes_with_party_pct - b.votes_with_party_pct) * -flagSort[newSortGlobal].flag;
   }
-  createTable(filteredMembers);
-};
-let A_B_surName = (a, b) => {
-  if (a.last_name < b.last_name) {
-    return flagSort[newSortGlobal].flag;
-  }
-  return -flagSort[newSortGlobal].flag;
-};
-let A_B_Name = (a, b) => {
-  if (a.first_name < b.first_name) {
-    return flagSort[newSortGlobal].flag;
-  }
-  return -flagSort[newSortGlobal].flag;
-};
-let A_B_Party = (a, b) => {
-  if (a.party < b.party) {
-    return flagSort[newSortGlobal].flag;
-  }
-  return -flagSort[newSortGlobal].flag;
-};
-let A_B_State = (a, b) => {
-  if (a.state < b.state) {
-    return flagSort[newSortGlobal].flag;
-  }
-  return -flagSort[newSortGlobal].flag;
-};
-let A_B_Seniority = (a, b) => {
-  return (a.seniority - b.seniority) * -flagSort[newSortGlobal].flag;
-};
-let A_B_Percentage = (a, b) => {
-  return (
-    (a.votes_with_party_pct - b.votes_with_party_pct) *
-    -flagSort[newSortGlobal].flag
-  );
+}
+let sortTheData = () => {
+  filteredMembers.sort(compare);
 };
 
 //CREATE THE STATISTIC DATA
 
 //Sorting missed votes function
-let compareKey = (a, b) => {
-  let result = 0;
-  if (a.comparingKey > b.comparingKey) {
-    result = 1;
-  } else if (a.comparingKey < b.comparingKey) {
-    result = -1;
-  }
-  return result;
+function compareKey(a, b) {
+  return (a.comparingKey - b.comparingKey);
 };
 
 //Fill the array "statistics"
@@ -378,41 +343,25 @@ let createLeastEng = () => {
   let len = statistics.sortedMembers.length;
   let cicle = Math.round(len / 10);
   let lastI = 0;
+  let stringLeast = "";
+  let stringMost = "";
   for (let i = 0; i < cicle; i++) {
     let personLeast = statistics.sortedMembers[i];
     let personMost = statistics.sortedMembers[len - 1 - i];
     //Least Table
-    let tRow = document.createElement("tr");
-    let tData = document.createElement("td");
-    tableLeast.append(tRow);
-    tRow.append(tData);
-    tData.innerHTML = `<a href="${personLeast.url}" target="_blank">${
-      personLeast.first_name
-    } ${personLeast.middle_name == null ? " " : personLeast.middle_name} ${
-      personLeast.last_name
-    }</a>`;
-    tData = document.createElement("td");
-    tRow.append(tData);
-    tData.innerHTML = personLeast.missed_votes;
-    tData = document.createElement("td");
-    tRow.append(tData);
-    tData.innerHTML = `${personLeast.comparingKey}%`;
+    stringLeast = stringLeast + `
+    <tr>
+      <td><a href="${personLeast.url}" target="_blank">${personLeast.first_name} ${personLeast.middle_name == null ? " " : personLeast.middle_name} ${personLeast.last_name}</a></td>
+      <td>${personLeast.missed_votes}%</td>
+      <td>${personLeast.comparingKey}%</td>
+    </tr>`;
     //Most Table
-    tRow = document.createElement("tr");
-    tData = document.createElement("td");
-    tableMost.append(tRow);
-    tRow.append(tData);
-    tData.innerHTML = `<a href="${personMost.url}" target="_blank">${
-      personMost.first_name
-    } ${personMost.middle_name == null ? " " : personMost.middle_name} ${
-      personMost.last_name
-    }</a>`;
-    tData = document.createElement("td");
-    tRow.append(tData);
-    tData.innerHTML = personMost.missed_votes;
-    tData = document.createElement("td");
-    tRow.append(tData);
-    tData.innerHTML = `${personMost.comparingKey}%`;
+    stringMost = stringMost + `
+    <tr>
+      <td><a href="${personMost.url}" target="_blank">${personMost.first_name} ${personMost.middle_name == null ? " " : personMost.middle_name} ${personMost.last_name}</a></td>
+      <td>${personMost.missed_votes}%</td>
+      <td>${personMost.comparingKey}%</td>
+    </tr>`;
     lastI = i;
   }
   //Check for repetitive Least
@@ -420,21 +369,12 @@ let createLeastEng = () => {
   for (let f = lastI + 1; f < len; f++) {
     let nextLeast = statistics.sortedMembers[f];
     if (nextLeast.comparingKey === lastLeast.comparingKey) {
-      tRow = document.createElement("tr");
-      tData = document.createElement("td");
-      tableLeast.append(tRow);
-      tRow.append(tData);
-      tData.innerHTML = `<a href="${nextLeast.url}" target="_blank">${
-        nextLeast.first_name
-      } ${nextLeast.middle_name == null ? " " : nextLeast.middle_name} ${
-        nextLeast.last_name
-      }</a>`;
-      tData = document.createElement("td");
-      tRow.append(tData);
-      tData.innerHTML = nextLeast.missed_votes;
-      tData = document.createElement("td");
-      tRow.append(tData);
-      tData.innerHTML = `${nextLeast.comparingKey}%`;
+      stringLeast = stringLeast + `
+      <tr>
+        <td><a href="${nextLeast.url}" target="_blank">${nextLeast.first_name} ${nextLeast.middle_name == null ? " " : nextLeast.middle_name} ${nextLeast.last_name}</a></td>
+        <td>${nextLeast.missed_votes}%</td>
+        <td>${nextLeast.comparingKey}%</td>
+      </tr>`;
     } else {
       break;
     }
@@ -444,25 +384,18 @@ let createLeastEng = () => {
   for (let f = len - 2 - lastI; f >= 0; f--) {
     let nextMost = statistics.sortedMembers[f];
     if (nextMost.comparingKey === lastMost.comparingKey) {
-      tRow = document.createElement("tr");
-      tData = document.createElement("td");
-      tableMost.append(tRow);
-      tRow.append(tData);
-      tData.innerHTML = `<a href="${nextMost.url}" target="_blank">${
-        nextMost.first_name
-      } ${nextMost.middle_name == null ? " " : nextMost.middle_name} ${
-        nextMost.last_name
-      }</a>`;
-      tData = document.createElement("td");
-      tRow.append(tData);
-      tData.innerHTML = nextMost.missed_votes;
-      tData = document.createElement("td");
-      tRow.append(tData);
-      tData.innerHTML = `${nextMost.comparingKey}%`;
+      stringMost = stringMost + `
+      <tr>
+        <td><a href="${nextMost.url}" target="_blank">${nextMost.first_name} ${nextMost.middle_name == null ? " " : nextMost.middle_name} ${nextMost.last_name}</a></td>
+        <td>${nextMost.missed_votes}%</td>
+        <td>${nextMost.comparingKey}%</td>
+      </tr>`;
     } else {
       break;
     }
   }
+  tableLeast.innerHTML = stringLeast;
+  tableMost.innerHTML = stringMost;
 };
 
 //Event Listeners
@@ -487,6 +420,3 @@ let addListener = () => {
     sort_Table(5);
   });
 };
-
-//LAUNCH!
-getData();
