@@ -62,15 +62,15 @@
         <div class="col-6">
           <h2>Least Engaged (Bottom 10% Attendance)</h2>
           <table class="table table-striped table-bordered table-hover table-sm">
-            <thead class="stick">
+            <thead>
               <tr>
-                <th class="stick">Name</th>
-                <th class="stick">Number of Missed Votes</th>
-                <th class="stick">% Missed</th>
+                <th>Name</th>
+                <th>Number of Missed Votes</th>
+                <th>% Missed</th>
               </tr>
             </thead>
             <tbody id="Table_Least_Eng">
-                <tr v-for="(person, idx) in mostMembersHouse" :key="idx">
+                <tr v-for="(person, idx) in mostMembersHouseA" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
@@ -82,15 +82,15 @@
         <div class="col-6">
           <h2>Most Engaged (Top 10% Attendance)</h2>
           <table class="table table-striped table-bordered table-hover table-sm">
-            <thead class="stick">
+            <thead>
               <tr>
-                <th class="stick">Name</th>
-                <th class="stick">Number of Missed Votes</th>
-                <th class="stick">% Missed</th>
+                <th>Name</th>
+                <th>Number of Missed Votes</th>
+                <th>% Missed</th>
               </tr>
             </thead>
             <tbody id="Table_Most_Eng">
-                <tr v-for="(person, idx) in leastMembersHouse" :key="idx">
+                <tr v-for="(person, idx) in leastMembersHouseA" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
@@ -107,14 +107,17 @@
 
 export default {
     name: 'houseattendance',
-    props: [
-        'statisticsHouse',
-        'leastMembersHouse',
-        'mostMembersHouse'],
 
-  data() {
-    return {
-    };
+computed: {
+    statisticsHouse() {
+      return this.$store.state.statisticsHouse;
+    },
+    leastMembersHouseA() {
+      return this.$store.state.leastMembersHouseA;
+    },
+    mostMembersHouseA() {
+      return this.$store.state.mostMembersHouseA;
+    }
   },
 
   methods: {
@@ -123,10 +126,4 @@ export default {
 </script>
 
 <style>
-  .stick {
-    position: sticky;
-    top: 0px;
-    background-color: rgb(221, 221, 221);
-    border-bottom: 2px solid #dee2e6;
-  }
 </style>

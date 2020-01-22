@@ -15,15 +15,11 @@
     </p>
     <div id="loadedPage">
       <div class="row align-items-end container" id="filters">
-        <filtering
-          :states="this.statesSenate"
-          v-on:partyChange="funzioneCK"
-          v-on:stateChange="funzioneST"
-        ></filtering>
+        <filtering></filtering>
       </div>
       <!--Table-->
       <table class="table table-bordered table-hover table-sm">
-        <thead>
+<!--         <thead>
           <tr>
             <th>
               Senator:
@@ -47,9 +43,9 @@
               >Percentage of votes</i>
             </th>
           </tr>
-        </thead>
+        </thead> -->
         <tbody id="members_table">
-          <tr v-for="(person, idx) in this.list" :key="idx">
+          <tr v-for="(person, idx) in list" :key="idx">
             <td>
               <a v-bind:href="person.url" target="_blank">
                 {{person.first_name}} {{person.middle_name}}
@@ -62,6 +58,7 @@
             <td>{{person.votes_with_party_pct}}%</td>
           </tr>
         </tbody>
+
         <tfoot id="members_foot" v-html="piede"></tfoot>
       </table>
     </div>
@@ -69,117 +66,37 @@
 </template>
 
 <script>
-import filtering from "./filtering";
+import filtering from "./filtering"
+
 export default {
   name: "senatedata",
-  props: [
-    "membersSenate",
-    "statesSenate",
-    "flagSort"
-  ],
   components: {
     filtering
   },
-  data() {
-    return {
-      list: this.membersSenate,
-      checkBoxes: [],
-      selectedState: "all",
-      piede: '<tr class="normal_foot"><td colspan="5">END OF LIST</td></tr>',
-      oldColumn: 0
-    };
+
+  created() {
+    this.$store.state.list = this.membersSenate;
+    this.$store.state.states = this.statesSenate;
   },
-  methods: {
-    //Sort
-    sortColumn(column) {
-      if (column != this.oldColumn) {
-        this.flagSort[this.oldColumn].flag = 0;
-        this.flagSort[this.oldColumn].arrow = this.flagSort[this.oldColumn].no;
-        this.flagSort[column].flag = -1;
-        this.flagSort[column].arrow = this.flagSort[column].down;
-        this.oldColumn = column;
-        this.sortedArray(column);
-      } else {
-        this.membersSenate.reverse();
-        this.flagSort[column].flag *= -1;
-        this.flagSort[column].arrow = this.flagSort[column].flag == -1 ?
-          this.flagSort[column].down :
-          this.flagSort[column].up;
-      }
-      this.filteredMembers = this.membersSenate;
-    },
-    sortedArray: function (y) {
-      function compare(a, b) {
-        switch (y) {
-          case 0:
-            if (a.last_name < b.last_name) return -1;
-            else return 1;
-          case 1:
-            if (a.first_name < b.first_name) return -1;
-            else return 1;
-          case 2:
-            if (a.party < b.party) return -1;
-            else return 1;
-          case 3:
-            if (a.state < b.state) return -1;
-            else return 1;
-          case 4:
-            return a.seniority - b.seniority;
-          case 5:
-            return a.votes_with_party_pct - b.votes_with_party_pct;
-        }
-      }
-      return this.membersSenate.sort(compare);
-    },
 
-    funzioneCK(check) {
-      this.checkBoxes = check;
-      this.list = this.membersSenate.filter(
-        x => x.state == this.selectedState || this.selectedState == "all"
-      );
-      this.list = this.list.filter(
-        x =>
-          x.party != this.checkBoxes[0] &&
-          x.party != this.checkBoxes[1] &&
-          x.party != this.checkBoxes[2]
-      );
-      this.list.length == 0
-        ? (this.piede =
-            '<tr class="error_foot"><td colspan="5">NO ITEMS TO DISPLAY</td></tr>')
-        : (this.piede =
-            '<tr class="normal_foot"><td colspan="5">END OF LIST</td></tr>');
-      return this.list;
+  computed: {
+    statesSenate() {
+      return this.$store.state.statesSenate;
     },
-
-    funzioneST(stato) {
-      this.selectedState = stato;
-      this.list = this.membersSenate.filter(
-        x => x.state == this.selectedState || this.selectedState == "all"
-      );
-      this.list = this.list.filter(
-        x =>
-          x.party != this.checkBoxes[0] &&
-          x.party != this.checkBoxes[1] &&
-          x.party != this.checkBoxes[2]
-      );
-      this.list.length == 0
-        ? (this.piede =
-            '<tr class="error_foot"><td colspan="5">NO ITEMS TO DISPLAY</td></tr>')
-        : (this.piede =
-            '<tr class="normal_foot"><td colspan="5">END OF LIST</td></tr>');
-      return this.list;
+    membersSenate() {
+      return this.$store.state.membersSenate;
+    },
+    piede() {
+      return this.$store.state.piede;
+    },
+    list() {
+      return this.$store.state.list;
     }
-  }
-};
+  },
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  thead th {
-    /* display: table-header-group; */
-    position: sticky;
-    top: 0px;
-    background-color: rgb(221, 221, 221);
-    border-bottom: 2px solid #dee2e6;
-  }
+<style>
 </style>

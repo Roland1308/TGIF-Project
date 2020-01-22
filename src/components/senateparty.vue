@@ -62,15 +62,15 @@
         <div class="col-6">
         <h2>Least Loyal (Bottom 10% of Party)</h2>
         <table class="table table-striped table-bordered table-hover table-sm">
-          <thead class="stick">
+          <thead>
             <tr>
-              <th class="stick">Name</th>
-              <th class="stick">Number Party Votes</th>
-              <th class="stick">% Party Votes</th>
+              <th>Name</th>
+              <th>Number Party Votes</th>
+              <th>% Party Votes</th>
               </tr>
             </thead>
             <tbody id="Table_Least_Eng">
-                <tr v-for="(person, idx) in leastMembersSenateParty" :key="idx">
+                <tr v-for="(person, idx) in leastMembersSenateP" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
@@ -82,15 +82,15 @@
         <div class="col-6">
         <h2>Most Loyal (Top 10% of Party)</h2>
         <table class="table table-striped table-bordered table-hover table-sm">
-          <thead class="stick">
+          <thead>
             <tr>
-              <th class="stick">Name</th>
-              <th class="stick">Number Party Votes</th>
-              <th class="stick">% Party Votes</th>
+              <th>Name</th>
+              <th>Number Party Votes</th>
+              <th>% Party Votes</th>
               </tr>
             </thead>
             <tbody id="Table_Most_Eng">
-                <tr v-for="(person, idx) in mostMembersSenateParty" :key="idx">
+                <tr v-for="(person, idx) in mostMembersSenateP" :key="idx">
                     <td><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}}
                     {{person.last_name}}</a></td>
                     <td>{{person.missed_votes}}</td>
@@ -107,14 +107,17 @@
 
 export default {
     name: 'senateparty',
-    props: [
-        'statisticsSenate',
-        'leastMembersSenateParty',
-        'mostMembersSenateParty'],
 
-  data() {
-    return {
-    };
+computed: {
+    statisticsSenate() {
+      return this.$store.state.statisticsSenate;
+    },
+    leastMembersSenateP() {
+      return this.$store.state.leastMembersSenateP;
+    },
+    mostMembersSenateP() {
+      return this.$store.state.mostMembersSenateP;
+    }
   },
 
   methods: {
@@ -122,11 +125,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.stick {
-    position: sticky;
-    top: 0px;
-    background-color: rgb(221, 221, 221);
-    border-bottom: 2px solid #dee2e6;
-  }
+<style>
 </style>
