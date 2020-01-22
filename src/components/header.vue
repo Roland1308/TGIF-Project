@@ -1,10 +1,10 @@
 <template>
     <nav>
         <div class="d-flex mb-2">
-          <router-link to="/" class="navbar-brand p-2 mr-auto"><img src="../../public/Images/MyTgif.jpg"
+          <router-link to="/" class="navbar-brand p-2 mr-auto"><img src="../assets/MyTgif.jpg"
               alt="Transparent Government in Fact" width="500" /></router-link>
           <p class="p-2 align-self-center">
-            <a href="mailto:info@tgif.net"><img src="../../public/Images/emailus.png" alt="Transparent Government in Fact"
+            <a href="mailto:info@tgif.net"><img src="../assets/emailus.png" alt="Transparent Government in Fact"
                 width="150" /></a>
           </p>
         </div>
