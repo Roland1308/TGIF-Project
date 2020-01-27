@@ -9,5 +9,5 @@ https://roland-tgif-vue.netlify.com/
 ## Version in VUE Command Line Interface:
 https://roland-tgif-vuecli.netlify.com/
 
-## Versión in VUEX:
+## Version in VUEX:
 https://roland-tgif-vuex.netlify.com/
